@@ -1,13 +1,14 @@
 
 # coding: utf-8
 
-# In[6]:
+# In[4]:
 
 from chatterbot import ChatBot
 from gtts import gTTS
 import os
 import pygame
 from pygame.locals import *
+import speech_recognition as sr
 
 chatbot_2 = ChatBot('holo_chatbot2', trainer='chatterbot.trainers.ChatterBotCorpusTrainer')
 
@@ -33,6 +34,7 @@ def play_movie(path):
     time.sleep(10)
     kill_by_process_name_shell('mplayerc.exe')
 
+#получить ответ чатбота,напечатав вопрос
 def get_chatbot_response(text):
     text = input()
     response = chatbot_2.get_response(text)
@@ -43,8 +45,24 @@ def get_chatbot_response(text):
     pygame.mixer.init()
     pygame.mixer.music.load('%s.mp3' % file_name)     
     pygame.mixer.music.play()
-    play_movie('conversation.mp4')
+    #play_movie('conversation.mp4')
 
+#получить ответ чатбота, задав вопрос голосом    
+def get_chatbot_response2(rec_text):
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print('chatbot is listening')
+        audio = r.listen(source)
+    rec_text = r.recognize_google(audio)
+    response = chatbot_2.get_response(rec_text)
+    response_str = str(response)
+    tts = gTTS(text=response_str, lang='en-us', slow=False)
+    file_name = str(id_generator(6))                   #добавить неповторяющееся имя файла  
+    file = tts.save('%s.mp3' % file_name)             
+    pygame.mixer.init()
+    pygame.mixer.music.load('%s.mp3' % file_name)     
+    pygame.mixer.music.play()
+    #play_movie('conversation.mp4')
     
 #функция проверяющая наличие подключения к интернету
 import requests
