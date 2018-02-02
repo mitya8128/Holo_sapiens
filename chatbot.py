@@ -47,7 +47,7 @@ def get_chatbot_response(text):
     pygame.mixer.music.play()
     #play_movie('conversation.mp4')
 
-#получить ответ чатбота, задав вопрос голосом    
+#получить ответ чатбота, задав вопрос голосом      
 def get_chatbot_response2(rec_text):
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -79,8 +79,18 @@ def connected_to_internet(url='http://www.google.com/', timeout=5):
 def r():
     if connected_to_internet() is True:
         get_chatbot_response('enter')
+        #get_chatbot_response2('rec_text')
     if connected_to_internet() is False:
         pygame.mixer.init()
         pygame.mixer.music.load("Tell me about your self.mp3")     
         pygame.mixer.music.play()
 
+#запустить голосовое распознавание вопроса
+def v():
+    if connected_to_internet() is True:
+        #get_chatbot_response('enter')
+        get_chatbot_response2('rec_text')
+    if connected_to_internet() is False:
+        pygame.mixer.init()
+        pygame.mixer.music.load("Tell me about your self.mp3")     
+        pygame.mixer.music.play()
