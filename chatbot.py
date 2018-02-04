@@ -41,7 +41,8 @@ def get_chatbot_response(text):
     response_str = str(response)
     tts = gTTS(text=response_str, lang='en-us', slow=False)
     file_name = str(id_generator(6))                   #добавить неповторяющееся имя файла  
-    file = tts.save('%s.mp3' % file_name)             
+    file = tts.save('%s.mp3' % file_name)
+    print(response_str)
     pygame.mixer.init()
     pygame.mixer.music.load('%s.mp3' % file_name)     
     pygame.mixer.music.play()
@@ -54,11 +55,13 @@ def get_chatbot_response2(rec_text):
         print('chatbot is listening')
         audio = r.listen(source)
     rec_text = r.recognize_google(audio)
+    print(rec_text)
     response = chatbot_2.get_response(rec_text)
     response_str = str(response)
     tts = gTTS(text=response_str, lang='en-us', slow=False)
     file_name = str(id_generator(6))                   #добавить неповторяющееся имя файла  
     file = tts.save('%s.mp3' % file_name)             
+    print(response_str)
     pygame.mixer.init()
     pygame.mixer.music.load('%s.mp3' % file_name)     
     pygame.mixer.music.play()
