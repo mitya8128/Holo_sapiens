@@ -12,7 +12,7 @@ import speech_recognition as sr
 
 chatbot_2 = ChatBot('holo_chatbot2', trainer='chatterbot.trainers.ChatterBotCorpusTrainer')
 
-chatbot_2.train('chatterbot.corpus.english.conversations')
+chatbot_2.train('chatterbot.corpus.english')
 
 
 #функция, создающая уникальное имя файла
@@ -56,6 +56,16 @@ def get_chatbot_response2(rec_text):
         audio = r.listen(source)
     rec_text = r.recognize_google(audio)
     print(rec_text)
+    '''
+     try:
+            result = recognizer_function(audio)                               #TODO:небольшой обработчик ошибок для распознавания речи
+            return Statement(result)
+        except speech_recognition.UnknownValueError:
+            return Statement('I am sorry, I could not understand that.')
+        except speech_recognition.RequestError as e:
+            m = 'My speech recognition service has failed. {0}'
+            return Statement(m.format(e))
+    '''
     response = chatbot_2.get_response(rec_text)
     response_str = str(response)
     tts = gTTS(text=response_str, lang='en-us', slow=False)
@@ -70,7 +80,7 @@ def get_chatbot_response2(rec_text):
 #функция проверяющая наличие подключения к интернету
 import requests
 
-def connected_to_internet(url='http://www.google.com/', timeout=5):
+def connected_to_internet(url='http://www.google.com/', timeout=10):
     try:
         _ = requests.get(url, timeout=timeout)
         return True
