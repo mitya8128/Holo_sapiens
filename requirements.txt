@@ -1,0 +1,4 @@
+chatterbot
+gTTS
+pygame
+SpeechRecognition
