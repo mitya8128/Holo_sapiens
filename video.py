@@ -7,29 +7,48 @@ import cv2
 
 def start_new_scanning():
     name = input()
-    scanning()
-    combineFaces(faces, w=100, h=100, numPerRow=5)
-    eigenVector = cv2.PCACompute(data, mean=None, maxComponents=10)
+    scanning(name)
+    #play_video()
+    #combineFaces(faces, w=100, h=100, numPerRow=5)
+    #eigenVector = cv2.PCACompute(data, mean=None, maxComponents=10)
     #сохранить данные в csv_файл
     
-def destroy_all():
+def play_video():
+    import numpy as np
+    import cv2
+
+    cap = cv2.VideoCapture('Holo Sapiens.mp4')
+
+    while(cap.isOpened()):
+        ret, frame = cap.read()
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        cv2.imshow('frame',gray)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+   
     cap.release()
+    cv2.destroyAllWindows()
+
+def destroy_all():
+    cap2.release()
     cv2.destroyAllWindows()
 
 
 #функция, выделяющая лицо человека
-def scanning():
+def scanning(name):
     import cv2
     import sys
 
     cascPath = "haarcascade_frontalface_default.xml"
     faceCascade = cv2.CascadeClassifier(cascPath)
 
-    cap = cv2.VideoCapture(0)
+    cap2 = cv2.VideoCapture(0)
   
-    while cap.isOpened():
+    while cap2.isOpened():
         
-        ret, frame = cap.read()
+        ret, frame = cap2.read()
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -51,11 +70,12 @@ def scanning():
         
         
         cv2.imshow('Video', frame)
+        cv2.imwrite('%s.png' % name, frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-    cap.release()
+    cap2.release()
     cv2.destroyAllWindows()
 
 
