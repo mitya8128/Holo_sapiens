@@ -3,16 +3,22 @@
 
 import numpy as np
 import cv2
+import string
+import random
 
 
 def start_new_scanning():
     name = input()
-    scanning(name)
+    file_name = str(name + id_generator(4))
+    scanning(file_name)
     #play_video()
     #combineFaces(faces, w=100, h=100, numPerRow=5)
-    #eigenVector = cv2.PCACompute(data, mean=None, maxComponents=10)
+    #eigenVector = cv2.PCACompute('%s.png' % name, mean=None, maxComponents=10)
     #сохранить данные в csv_файл
     
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
 def play_video():
     import numpy as np
     import cv2
@@ -37,7 +43,7 @@ def destroy_all():
 
 
 #функция, выделяющая лицо человека
-def scanning(name):
+def scanning(file_name):
     import cv2
     import sys
 
@@ -70,7 +76,7 @@ def scanning(name):
         
         
         cv2.imshow('Video', frame)
-        cv2.imwrite('%s.png' % name, frame)
+        cv2.imwrite('%s.png' % file_name, frame)
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
