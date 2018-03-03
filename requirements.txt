@@ -2,3 +2,5 @@ chatterbot
 gTTS
 pygame
 SpeechRecognition
+opencv-python
+numpy
