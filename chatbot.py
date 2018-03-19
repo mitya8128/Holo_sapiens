@@ -44,7 +44,8 @@ def get_chatbot_response(text):
     file = tts.save('%s.mp3' % file_name)
     print(response_str)
     pygame.mixer.init()
-    pygame.mixer.music.load('%s.mp3' % file_name)     
+    #pygame.mixer.music.load('%s.mp3' % file_name)     
+    pygame.mixer.music.load('%s.mp3' % file_name)
     pygame.mixer.music.play()
     #play_movie('conversation.mp4')
 
@@ -80,7 +81,7 @@ def get_chatbot_response2(rec_text):
 #функция проверяющая наличие подключения к интернету
 import requests
 
-def connected_to_internet(url='http://www.google.com/', timeout=10):
+def connected_to_internet(url='http://www.google.com/', timeout=5):
     try:
         _ = requests.get(url, timeout=timeout)
         return True
@@ -107,3 +108,10 @@ def v():
         pygame.mixer.init()
         pygame.mixer.music.load("Tell me about your self.mp3")     
         pygame.mixer.music.play()
+        
+        
+while True:
+    try:
+        get_response()
+    except (KeyboardInterrupt, EOFError, SystemExit):
+        break
